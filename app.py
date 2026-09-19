@@ -1,4 +1,4 @@
-# app.py - Emerald Green Theme & Global Strategic Portal
+# app.py - Midnight Neon Executive Theme & Global Strategic Portal
 import streamlit as st
 import pandas as pd
 import os
@@ -10,47 +10,60 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# 2. Custom Emerald Green Styling
+# 2. Custom Midnight Neon Executive Styling
 st.markdown("""
     <style>
     /* Main Background & Font */
     .stApp {
-        background-color: #0d1b12;
-        color: #e2f8ec;
+        background-color: #0b0f19;
+        color: #f3f4f6;
+        font-family: 'Inter', sans-serif;
     }
     
     /* Sidebar Styling */
     [data-testid="stSidebar"] {
-        background-color: #132e1d;
-        border-right: 1px solid #1f4e35;
+        background-color: #111827;
+        border-right: 1px solid #1f2937;
     }
     
-    /* Headers & Text */
+    /* Headers & Text - Vibrant Cyan & White */
     h1, h2, h3 {
-        color: #2ec4b6 !important;
-        font-family: 'Helvetica Neue', sans-serif;
+        color: #38bdf8 !important;
+        font-weight: 700;
     }
     
-    /* Buttons */
+    /* Subtitles / Markdown text */
+    p {
+        color: #d1d5db;
+    }
+    
+    /* Buttons / Interactive Elements */
     .stButton>button {
-        background-color: #2ec4b6;
-        color: #0d1b12;
-        border-radius: 6px;
-        font-weight: bold;
+        background: linear-gradient(135deg, #38bdf8 0%, #818cf8 100%);
+        color: #0b0f19;
+        border-radius: 8px;
+        font-weight: 600;
         border: none;
+        padding: 0.5rem 1rem;
+        box-shadow: 0 4px 12px rgba(56, 189, 248, 0.2);
     }
     .stButton>button:hover {
-        background-color: #38ef7d;
+        background: linear-gradient(135deg, #7dd3fc, #a5b4fc);
         color: #000000;
     }
     
-    /* Containers / Cards */
+    /* Job Card Containers */
     div.stContainer {
-        background-color: #132e1d;
-        padding: 15px;
-        border-radius: 8px;
-        border: 1px solid #1f4e35;
-        margin-bottom: 10px;
+        background-color: #111827;
+        padding: 20px;
+        border-radius: 12px;
+        border: 1px solid #1f2937;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        margin-bottom: 12px;
+        transition: transform 0.2s ease;
+    }
+    div.stContainer:hover {
+        border-color: #38bdf8;
     }
     </style>
 """, unsafe_allow_html=True)
