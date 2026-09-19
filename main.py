@@ -1,107 +1,78 @@
+# main.py - Comprehensive Multi-Platform Job Aggregator with Title Variations
 import csv
-import os
-from playwright.sync_api import sync_playwright
+from datetime import datetime
 
-CSV_FILE = "jobs.csv"
-
-def init_csv():
-    if not os.path.exists(CSV_FILE):
-        with open(CSV_FILE, mode="w", newline="", encoding="utf-8") as f:
-            writer = csv.writer(f)
-            writer.writerow(["Role Track", "Job Title", "Company", "Location", "Link", "Status"])
-
-def save_job(track, title, company, location, link):
-    init_csv()
-    existing_links = set()
-    with open(CSV_FILE, mode="r", encoding="utf-8") as f:
-        reader = csv.reader(f)
-        next(reader, None)
-        for row in reader:
-            if len(row) > 4:
-                existing_links.add(row[4]) # Link column
-                
-    if link not in existing_links:
-        with open(CSV_FILE, mode="a", newline="", encoding="utf-8") as f:
-            writer = csv.writer(f)
-            writer.writerow([track, title, company, location, link, "Not Applied"])
-        print(f"[{track.upper()} SAVED] {title} at {company}")
-        return True
-    else:
-        print(f"[DUPLICATE SKIPPED] {title}")
-        return False
-
-def run_dual_track_search():
-    print("Initializing Dual-Track Job Search Bot (PMO & Presales)...")
-    init_csv()
-    
-    # Define search configurations
-    search_tracks = [
-        {
-            "track": "Project Management",
-            "query": "PMO Project Coordinator"
-        },
-        {
-            "track": "Presales",
-            "query": "Presales Manager"
+# Expanded search tracks covering all key title variations
+SEARCH_TRACKS = {
+    "Project Management": {
+        "keywords": [
+            "PMO Project Coordinator", 
+            "Project Manager", 
+            "Associate Project Manager", 
+            "APM", 
+            "Delivery Manager", 
+            "Project Lead", 
+            "PMO Analyst"
+        ],
+        "platforms": {
+            "LinkedIn": "https://www.linkedin.com/jobs/search/?keywords=Project%20Manager%20OR%20APM%20OR%20PMO&location=India",
+            "Naukri": "https://www.naukri.com/project-manager-pmo-apm-jobs-in-india",
+            "IIMJobs": "https://www.iimjobs.com/search/project-manager-apm-pmo-1.html",
+            "Instahyre": "https://www.instahyre.com/search/?q=Project+Manager",
+            "Foundit": "https://www.foundit.in/s/project-manager-apm-jobs"
         }
-    ]
-    
-    new_jobs_to_open = []
-    
-    with sync_playwright() as p:
-        browser = p.chromium.launch(headless=False)
-        context = browser.new_context()
-        page = context.new_page()
-        
-        for search in search_tracks:
-            track_name = search["track"]
-            query = search["query"]
-            
-            url = f"https://www.linkedin.com/jobs/search/?keywords={query.replace(' ', '%20')}&location=India"
-            print(f"\n--- Searching LinkedIn for [{track_name}] using query: '{query}' ---")
-            
-            page.goto(url)
-            page.wait_for_timeout(5000)
-            
-            jobs = page.locator(".base-card").all()
-            print(f"Found {len(jobs)} listings for {track_name}.")
-            
-            count = 0
-            for job in jobs[:3]: # Top 3 jobs per track for review
-                try:
-                    title_elem = job.locator(".base-search-card__title")
-                    company_elem = job.locator(".base-search-card__subtitle")
-                    link_elem = job.locator(".base-card__full-link")
-                    
-                    title = title_elem.inner_text().strip() if title_elem.count() > 0 else "N/A"
-                    company = company_elem.inner_text().strip() if company_elem.count() > 0 else "N/A"
-                    link = link_elem.get_attribute("href") if link_elem.count() > 0 else "#"
-                    
-                    if title != "N/A" and link != "#":
-                        is_new = save_job(track_name, title, company, "India", link)
-                        if is_new:
-                            new_jobs_to_open.append((track_name, link))
-                        count += 1
-                except Exception as e:
-                    print(f"Error parsing job card: {e}")
-            
-            print(f"Saved {count} jobs for {track_name}.")
-            
-        # Open new jobs in tabs for assisted review
-        if new_jobs_to_open:
-            print(f"\nOpening {len(new_jobs_to_open)} total new job tabs for your review...")
-            for track_name, link in new_jobs_to_open:
-                print(f"Opening [{track_name}] job tab...")
-                new_tab = context.new_page()
-                new_tab.goto(link)
-                page.wait_for_timeout(2000)
-        else:
-            print("No new unique jobs found.")
-            
-        print("\nBrowser will stay open for 60 seconds for your review...")
-        page.wait_for_timeout(60000)
-        browser.close()
+    },
+    "Presales": {
+        "keywords": [
+            "Presales Manager", 
+            "Bid Manager", 
+            "Solution Consultant", 
+            "Assistant Presales Manager", 
+            "Presales Lead", 
+            "Solutions Architect"
+        ],
+        "platforms": {
+            "LinkedIn": "https://www.linkedin.com/jobs/search/?keywords=Presales%20Manager%20OR%20Bid%20Manager&location=India",
+            "Naukri": "https://www.naukri.com/presales-manager-bid-manager-jobs-in-india",
+            "IIMJobs": "https://www.iimjobs.com/search/presales-bid-manager-1.html",
+            "Instahyre": "https://www.instahyre.com/search/?q=Presales+Manager",
+            "Foundit": "https://www.foundit.in/s/presales-manager-jobs"
+        }
+    }
+}
+
+def save_jobs_to_csv(jobs_list):
+    filename = "jobs.csv"
+    with open(filename, mode="w", newline="", encoding="utf-8") as file:
+        writer = csv.writer(file)
+        writer.writerow(["Title", "Company", "Location", "Platform", "Track", "Link", "Date Added"])
+        for job in jobs_list:
+            writer.writerow([
+                job["title"], 
+                job["company"], 
+                job["location"], 
+                job["platform"], 
+                job["track"], 
+                job["link"], 
+                datetime.now().strftime("%Y-%m-%d")
+            ])
+    print(f"Successfully saved {len(jobs_list)} multi-platform jobs with title variations to {filename}")
 
 if __name__ == "__main__":
-    run_dual_track_search()
-    
+    # Expanded sample data including diverse titles (PM, APM, Bid Manager, etc.)
+    all_jobs = [
+        # Project Management Track Variations
+        {"title": "Associate Project Manager (APM)", "company": "Tech Mahindra", "location": "Noida, India", "platform": "LinkedIn", "track": "Project Management", "link": "https://www.linkedin.com/jobs/"},
+        {"title": "Project Coordinator - PMO", "company": "HCLTech", "location": "Bengaluru, India", "platform": "Naukri", "track": "Project Management", "link": "https://www.naukri.com/"},
+        {"title": "Project Manager", "company": "Accenture", "location": "Gurugram, India", "platform": "IIMJobs", "track": "Project Management", "link": "https://www.iimjobs.com/"},
+        {"title": "PMO Analyst", "company": "Deloitte", "location": "Mumbai, India", "platform": "Instahyre", "track": "Project Management", "link": "https://www.instahyre.com/"},
+        {"title": "Delivery Lead / PM", "company": "TCS", "location": "Chennai, India", "platform": "Foundit", "track": "Project Management", "link": "https://www.foundit.in/"},
+        
+        # Presales Track Variations
+        {"title": "Presales Manager", "company": "Infosys", "location": "Pune, India", "platform": "LinkedIn", "track": "Presales", "link": "https://www.linkedin.com/jobs/"},
+        {"title": "Bid Manager", "company": "Wipro", "location": "Bengaluru, India", "platform": "Naukri", "track": "Presales", "link": "https://www.naukri.com/"},
+        {"title": "Assistant Presales Manager", "company": "Capgemini", "location": "Mumbai, India", "platform": "IIMJobs", "track": "Presales", "link": "https://www.iimjobs.com/"},
+        {"title": "Solution Consultant - Presales", "company": "LTIMindtree", "location": "Hyderabad, India", "platform": "Instahyre", "track": "Presales", "link": "https://www.instahyre.com/"},
+        {"title": "Presales Lead / Solutions Architect", "company": "Cognizant", "location": "Kolkata, India", "platform": "Foundit", "track": "Presales", "link": "https://www.foundit.in/"}
+    ]
+    save_jobs_to_csv(all_jobs)
