@@ -3,14 +3,14 @@ import streamlit as st
 import pandas as pd
 import os
 
-# Page Configuration
+# 1. Page Configuration MUST be the very first Streamlit command
 st.set_page_config(
     page_title="Palak AI - Global Strategic Job Search Portal",
-    page_layout="wide",
+    layout="wide",
     initial_sidebar_state="expanded"
 )
 
-# Custom Emerald Green Styling
+# 2. Custom Emerald Green Styling
 st.markdown("""
     <style>
     /* Main Background & Font */
