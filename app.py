@@ -1,4 +1,4 @@
-# app.py - Midnight Neon Executive Theme & Global Strategic Portal
+# app.py - Gen-Z Aesthetic / Tokyo Night Theme
 import streamlit as st
 import pandas as pd
 import os
@@ -10,60 +10,60 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# 2. Custom Midnight Neon Executive Styling
+# 2. Custom Aesthetic Styling (Tokyo Night / Minimalist Tech Vibe)
 st.markdown("""
     <style>
-    /* Main Background & Font */
+    /* Main Background & Soft Text */
     .stApp {
-        background-color: #0b0f19;
-        color: #f3f4f6;
+        background-color: #1a1b26;
+        color: #c0caf5;
         font-family: 'Inter', sans-serif;
     }
     
     /* Sidebar Styling */
     [data-testid="stSidebar"] {
-        background-color: #111827;
-        border-right: 1px solid #1f2937;
+        background-color: #16161e;
+        border-right: 1px solid #24283b;
     }
     
-    /* Headers & Text - Vibrant Cyan & White */
+    /* Headers - Soft Lavender/Purple Accent */
     h1, h2, h3 {
-        color: #38bdf8 !important;
+        color: #bb9af7 !important;
         font-weight: 700;
     }
     
     /* Subtitles / Markdown text */
     p {
-        color: #d1d5db;
+        color: #a9b1d6;
     }
     
-    /* Buttons / Interactive Elements */
+    /* Gradient Buttons (Indigo to Soft Purple) */
     .stButton>button {
-        background: linear-gradient(135deg, #38bdf8 0%, #818cf8 100%);
-        color: #0b0f19;
+        background: linear-gradient(135deg, #7aa2f7 0%, #bb9af7 100%);
+        color: #1a1b26;
         border-radius: 8px;
         font-weight: 600;
         border: none;
         padding: 0.5rem 1rem;
-        box-shadow: 0 4px 12px rgba(56, 189, 248, 0.2);
+        box-shadow: 0 4px 12px rgba(122, 162, 247, 0.3);
     }
     .stButton>button:hover {
-        background: linear-gradient(135deg, #7dd3fc, #a5b4fc);
+        background: linear-gradient(135deg, #89b4fa, #cba6f7);
         color: #000000;
     }
     
-    /* Job Card Containers */
+    /* Job Card Containers - Sleek Dark Cards with Soft Borders */
     div.stContainer {
-        background-color: #111827;
+        background-color: #16161e;
         padding: 20px;
         border-radius: 12px;
-        border: 1px solid #1f2937;
-        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        border: 1px solid #24283b;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2);
         margin-bottom: 12px;
-        transition: transform 0.2s ease;
+        transition: all 0.2s ease;
     }
     div.stContainer:hover {
-        border-color: #38bdf8;
+        border-color: #7aa2f7;
     }
     </style>
 """, unsafe_allow_html=True)
