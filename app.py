@@ -1,12 +1,63 @@
-# app.py - Enhanced Dashboard with Applied Status Tracker
+# app.py - Emerald Green Theme & Global Strategic Portal
 import streamlit as st
 import pandas as pd
 import os
 
-st.set_page_config(page_title="Palak AI - PMO & Presales Job Tracker", layout="wide")
+# Page Configuration
+st.set_page_config(
+    page_title="Palak AI - Global Strategic Job Search Portal",
+    page_layout="wide",
+    initial_sidebar_state="expanded"
+)
 
-st.title("🚀 Palak AI: PMO & Presales Job Tracker")
-st.markdown("Your multi-platform intelligent job hunting dashboard across LinkedIn, Naukri, IIMJobs, Instahyre, and Foundit with Application Tracker.")
+# Custom Emerald Green Styling
+st.markdown("""
+    <style>
+    /* Main Background & Font */
+    .stApp {
+        background-color: #0d1b12;
+        color: #e2f8ec;
+    }
+    
+    /* Sidebar Styling */
+    [data-testid="stSidebar"] {
+        background-color: #132e1d;
+        border-right: 1px solid #1f4e35;
+    }
+    
+    /* Headers & Text */
+    h1, h2, h3 {
+        color: #2ec4b6 !important;
+        font-family: 'Helvetica Neue', sans-serif;
+    }
+    
+    /* Buttons */
+    .stButton>button {
+        background-color: #2ec4b6;
+        color: #0d1b12;
+        border-radius: 6px;
+        font-weight: bold;
+        border: none;
+    }
+    .stButton>button:hover {
+        background-color: #38ef7d;
+        color: #000000;
+    }
+    
+    /* Containers / Cards */
+    div.stContainer {
+        background-color: #132e1d;
+        padding: 15px;
+        border-radius: 8px;
+        border: 1px solid #1f4e35;
+        margin-bottom: 10px;
+    }
+    </style>
+""", unsafe_allow_html=True)
+
+# App Header
+st.title("🚀 Palak AI: Global Strategic Job Search Portal")
+st.markdown("Your multi-platform intelligent job hunting command center across LinkedIn, Naukri, IIMJobs, Instahyre, and Foundit with live Application Tracker.")
 
 # Load jobs data safely
 if os.path.exists("jobs.csv"):
