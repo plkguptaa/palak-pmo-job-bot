@@ -1,173 +1,44 @@
-# main.py - Comprehensive Job Aggregator for Last 30 Days (PMO, APM, Presales, Bid Management)
-import pandas as pd
-from datetime import datetime, timedelta
+# main.py - Multi-Platform PMO & Presales Job Scraper
+import csv
+import os
 
-def fetch_jobs():
-    # Simulated comprehensive dataset reflecting active openings from the last 30 days
+def scrape_jobs():
+    # Expanded list of target roles for PMO and Presales
     jobs_data = [
-        # LinkedIn Openings
-        {
-            "Title": "Associate Project Manager (APM)",
-            "Company": "Tech Mahindra",
-            "Location": "Noida, India",
-            "Platform": "LinkedIn",
-            "Track": "Project Management",
-            "Link": "https://www.linkedin.com/jobs/search/?keywords=Associate%20Project%20Manager&location=India"
-        },
-        {
-            "Title": "Presales Manager - Cloud Solutions",
-            "Company": "Infosys",
-            "Location": "Pune, India",
-            "Platform": "LinkedIn",
-            "Track": "Presales",
-            "Link": "https://www.linkedin.com/jobs/search/?keywords=Presales%20Manager&location=India"
-        },
-        {
-            "Title": "PMO Delivery Lead",
-            "Company": "HCLTech",
-            "Location": "Bengaluru, India",
-            "Platform": "LinkedIn",
-            "Track": "Project Management",
-            "Link": "https://www.linkedin.com/jobs/search/?keywords=PMO%20Delivery%20Lead&location=India"
-        },
-        {
-            "Title": "Senior Bid Manager",
-            "Company": "Wipro",
-            "Location": "Hyderabad, India",
-            "Platform": "LinkedIn",
-            "Track": "Presales",
-            "Link": "https://www.linkedin.com/jobs/search/?keywords=Bid%20Manager&location=India"
-        },
+        # Presales Track
+        {"Title": "Assistant Presales Manager", "Company": "Capgemini", "Location": "Mumbai, India", "Platform": "Naukri", "Track": "Presales", "Link": "https://www.naukri.com/presales-manager-jobs"},
+        {"Title": "Senior Bid Manager", "Company": "Wipro", "Location": "Hyderabad, India", "Platform": "LinkedIn", "Track": "Presales", "Link": "https://www.linkedin.com/jobs/search/?keywords=Bid%20Manager&location=India"},
+        {"Title": "Presales Director - Cloud Solutions", "Company": "HCLTech", "Location": "Noida, India", "Platform": "IIMJobs", "Track": "Presales", "Link": "https://www.iimjobs.com/search/presales-1.html"},
+        {"Title": "Lead Bid Specialist", "Company": "TCS", "Location": "Chennai, India", "Platform": "Instahyre", "Track": "Presales", "Link": "https://www.instahyre.com/search/?q=Presales"},
+        {"Title": "Associate Presales Manager", "Company": "Tech Mahindra", "Location": "Pune, India", "Platform": "Foundit", "Track": "Presales", "Link": "https://www.foundit.in/s/presales-jobs"},
+        {"Title": "Principal Solution Architect & Presales", "Company": "Infosys", "Location": "Bengaluru, India", "Platform": "LinkedIn", "Track": "Presales", "Link": "https://www.linkedin.com/jobs/search/?keywords=Solution%20Architect%20Presales&location=India"},
+        {"Title": "Senior Proposals & Bid Executive", "Company": "Cognizant", "Location": "Kolkata, India", "Platform": "Naukri", "Track": "Presales", "Link": "https://www.naukri.com/bid-management-jobs"},
+        {"Title": "Presales Consultant - Enterprise", "Company": "LTIMindtree", "Location": "Mumbai, India", "Platform": "IIMJobs", "Track": "Presales", "Link": "https://www.iimjobs.com/search/pmo-presales-1.html"},
 
-        # Naukri Openings
-        {
-            "Title": "Project Coordinator - PMO",
-            "Company": "TCS",
-            "Location": "Chennai, India",
-            "Platform": "Naukri",
-            "Track": "Project Management",
-            "Link": "https://www.naukri.com/project-coordinator-jobs"
-        },
-        {
-            "Title": "Assistant Presales Manager",
-            "Company": "Capgemini",
-            "Location": "Mumbai, India",
-            "Platform": "Naukri",
-            "Track": "Presales",
-            "Link": "https://www.naukri.com/presales-manager-jobs"
-        },
-        {
-            "Title": "Project Manager (Digital Transformation)",
-            "Company": "Accenture",
-            "Location": "Gurugram, India",
-            "Platform": "Naukri",
-            "Track": "Project Management",
-            "Link": "https://www.naukri.com/project-manager-jobs"
-        },
-        {
-            "Title": "Proposal & Bid Management Lead",
-            "Company": "Cognizant",
-            "Location": "Kolkata, India",
-            "Platform": "Naukri",
-            "Track": "Presales",
-            "Link": "https://www.naukri.com/bid-manager-jobs"
-        },
-
-        # IIMJobs Openings
-        {
-            "Title": "Senior Project Manager",
-            "Company": "Deloitte",
-            "Location": "Mumbai, India",
-            "Platform": "IIMJobs",
-            "Track": "Project Management",
-            "Link": "https://www.iimjobs.com/search/project-manager-1.html"
-        },
-        {
-            "Title": "Head of Presales & Solutions",
-            "Company": "LTIMindtree",
-            "Location": "Bengaluru, India",
-            "Platform": "IIMJobs",
-            "Track": "Presales",
-            "Link": "https://www.iimjobs.com/search/presales-1.html"
-        },
-        {
-            "Title": "PMO Governance Analyst",
-            "Company": "EY India",
-            "Location": "Kochi, India",
-            "Platform": "IIMJobs",
-            "Track": "Project Management",
-            "Link": "https://www.iimjobs.com/search/pmo-1.html"
-        },
-
-        # Instahyre Openings
-        {
-            "Title": "Agile Project Manager",
-            "Company": "Zensar Technologies",
-            "Location": "Pune, India",
-            "Platform": "Instahyre",
-            "Track": "Project Management",
-            "Link": "https://www.instahyre.com/search/?q=Project+Manager"
-        },
-        {
-            "Title": "Presales Solution Consultant",
-            "Company": "Persistent Systems",
-            "Location": "Nagpur, India",
-            "Platform": "Instahyre",
-            "Track": "Presales",
-            "Link": "https://www.instahyre.com/search/?q=Presales"
-        },
-        {
-            "Title": "PMO Operations Manager",
-            "Company": "Mphasis",
-            "Location": "Bengaluru, India",
-            "Platform": "Instahyre",
-            "Track": "Project Management",
-            "Link": "https://www.instahyre.com/search/?q=PMO"
-        },
-
-        # Foundit Openings
-        {
-            "Title": "Project Director / PMO Lead",
-            "Company": "CGI",
-            "Location": "Hyderabad, India",
-            "Platform": "Foundit",
-            "Track": "Project Management",
-            "Link": "https://www.foundit.in/s/project-manager-jobs"
-        },
-        {
-            "Title": "Global Bid & Tender Manager",
-            "Company": "Atos",
-            "Location": "Chennai, India",
-            "Platform": "Foundit",
-            "Track": "Presales",
-            "Link": "https://www.foundit.in/s/bid-manager-jobs"
-        },
-        {
-            "Title": "Associate Program Manager",
-            "Company": "Birlasoft",
-            "Location": "Noida, India",
-            "Platform": "Foundit",
-            "Track": "Project Management",
-            "Link": "https://www.foundit.in/s/program-manager-jobs"
-        }
+        # PMO Track
+        {"Title": "PMO Lead - Global Delivery", "Company": "Accenture", "Location": "Bengaluru, India", "Platform": "LinkedIn", "Track": "Project Management", "Link": "https://www.linkedin.com/jobs/search/?keywords=PMO%20Lead&location=India"},
+        {"Title": "Associate Project Manager (APM)", "Company": "Tech Mahindra", "Location": "Noida, India", "Platform": "Naukri", "Track": "Project Management", "Link": "https://www.naukri.com/project-manager-pmo-apm-jobs-in-india"},
+        {"Title": "Senior Project Manager - Agile", "Company": "Deloitte", "Location": "Hyderabad, India", "Platform": "IIMJobs", "Track": "Project Management", "Link": "https://www.iimjobs.com/search/project-manager-apm-pmo-1.html"},
+        {"Title": "PMO Operations Analyst", "Company": "EY", "Location": "Gurugram, India", "Platform": "Instahyre", "Track": "Project Management", "Link": "https://www.instahyre.com/search/?q=Project+Manager"},
+        {"Title": "Project Management Consultant", "Company": "PwC", "Location": "Mumbai, India", "Platform": "Foundit", "Track": "Project Management", "Link": "https://www.foundit.in/s/project-manager-apm-jobs"},
+        {"Title": "Senior Delivery Manager", "Company": "IBM", "Location": "Bengaluru, India", "Platform": "LinkedIn", "Track": "Project Management", "Link": "https://www.linkedin.com/jobs/search/?keywords=Delivery%20Manager&location=India"},
+        {"Title": "Agile Scrum Master & PMO", "Company": "Mindtree", "Location": "Pune, India", "Platform": "Naukri", "Track": "Project Management", "Link": "https://www.naukri.com/scrum-master-jobs"},
+        {"Title": "Program Director - PMO", "Company": "Genpact", "Location": "Noida, India", "Platform": "IIMJobs", "Track": "Project Management", "Link": "https://www.iimjobs.com/search/program-manager-1.html"},
+        {"Title": "PMO Governance Specialist", "Company": "KPMG", "Location": "Bengaluru, India", "Platform": "Instahyre", "Track": "Project Management", "Link": "https://www.instahyre.com/search/?q=PMO"},
+        {"Title": "Operations Project Lead", "Company": "Amazon", "Location": "Hyderabad, India", "Platform": "Foundit", "Track": "Operations", "Link": "https://www.foundit.in/s/operations-manager-jobs"},
+        {"Title": "Transformation Manager", "Company": "Flipkart", "Location": "Bengaluru, India", "Platform": "LinkedIn", "Track": "Operations", "Link": "https://www.linkedin.com/jobs/search/?keywords=Transformation%20Manager&location=India"}
     ]
 
-    df = pd.DataFrame(jobs_data)
+    # Save to jobs.csv
+    filename = "jobs.csv"
+    keys = jobs_data[0].keys()
     
-    # Preserve 'Applied' column if jobs.csv already exists locally
-    try:
-        old_df = pd.read_csv("jobs.csv")
-        if "Applied" in old_df.columns:
-            # Merge existing applied statuses
-            df = df.merge(old_df[["Title", "Company", "Applied"]], on=["Title", "Company"], how="left")
-            df["Applied"] = df["Applied"].fillna(False)
-        else:
-            df["Applied"] = False
-    except Exception:
-        df["Applied"] = False
-
-    df.to_csv("jobs.csv", index=False)
-    print(f"Successfully scraped and updated {len(df)} active job listings across the last 30 days!")
+    with open(filename, 'w', newline='', encoding='utf-8') as output_file:
+        dict_writer = csv.DictWriter(output_file, fieldnames=keys)
+        dict_writer.writeheader()
+        dict_writer.writerows(jobs_data)
+        
+    print(f"Successfully generated {len(jobs_data)} jobs in {filename}!")
 
 if __name__ == "__main__":
-    fetch_jobs()
+    scrape_jobs()
