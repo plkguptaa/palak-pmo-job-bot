@@ -4,7 +4,6 @@ import pandas as pd
 import os
 from pypdf import PdfReader
 from docx import Document
-import random
 
 # 1. Page Configuration
 st.set_page_config(
@@ -143,44 +142,33 @@ st.title("🚀 Palak AI Job Assistant")
 st.markdown("### **PMO • Project Management • Operations Roles | Career Navigator**")
 st.caption("🟢 **Multi-Platform Aggregator** | PMO & Agile Focused")
 
-# Load jobs data safely
+# Load jobs data safely directly
 if os.path.exists("jobs.csv"):
     try:
-        df = pd.read_csv("jobs.csv", on_bad_lines='skip')
-        df.columns = df.columns.str.strip()
-
-        required_cols = ["Title", "Company", "Location", "Platform", "Track", "Link"]
-        for col in required_cols:
-            if col not in df.columns:
-                df[col] = "N/A"
-
-        text_cols = ["Title", "Company", "Location", "Platform", "Track"]
-        df[text_cols] = df[text_cols].fillna("N/A")
+        raw_df = pd.read_csv("jobs.csv", on_bad_lines='skip')
+        raw_df.columns = raw_df.columns.str.strip().str.lower()
+        
+        df = pd.DataFrame()
+        df["Title"] = raw_df["job_profile"] if "job_profile" in raw_df.columns else (raw_df["title"] if "title" in raw_df.columns else "N/A")
+        df["Company"] = raw_df["company"] if "company" in raw_df.columns else "N/A"
+        df["Location"] = raw_df["location"] if "location" in raw_df.columns else ("city" if "city" in raw_df.columns and "city" in raw_df.columns else "N/A")
+        df["Platform"] = raw_df["source"] if "source" in raw_df.columns else ("platform" if "platform" in raw_df.columns else "LinkedIn")
+        df["Track"] = raw_df["track"] if "track" in raw_df.columns else "PMO"
+        df["Job_Age"] = raw_df["posted_date"] if "posted_date" in raw_df.columns else "2 days ago"
+        df["Link"] = raw_df["apply_link"] if "apply_link" in raw_df.columns else ("url" if "url" in raw_df.columns else "#")
+        df["Description"] = raw_df["description"] if "description" in raw_df.columns else ""
 
         if "ATS_Status" not in df.columns:
             df["ATS_Status"] = "Not Applied"
 
         if "Saved" not in df.columns:
             df["Saved"] = False
-        else:
-            df["Saved"] = (
-                df["Saved"]
-                .astype(str)
-                .str.strip()
-                .str.lower()
-                .map({"true": True, "1": True, "false": False, "0": False})
-                .fillna(False)
-            )
-
-        if "Job_Age" not in df.columns:
-            ages = ["2 days ago", "6 hours ago", "1 week ago", "3 days ago", "Just now", "4 days ago"]
-            df["Job_Age"] = [random.choice(ages) for _ in range(len(df))]
 
         # --- SIDEBAR CONTROLS ---
         st.sidebar.header("🔍 Search & Filters")
         search_query = st.sidebar.text_input("Search Title / Company", key="search_query")
 
-        tracks = ["All"] + sorted(df["Track"].dropna().unique().tolist())
+        tracks = ["All"] + sorted(df["Track"].dropna().unique().tolist()) if "Track" in df.columns else ["All"]
         selected_track = st.sidebar.selectbox("Career Track", tracks, key="track_sel")
 
         st.sidebar.markdown("### 🎯 PMO Focus Roles")
@@ -191,10 +179,10 @@ if os.path.exists("jobs.csv"):
             key="quick_chip_sel"
         )
 
-        platforms = ["All"] + sorted(df["Platform"].dropna().unique().tolist())
+        platforms = ["All"] + sorted(df["Platform"].dropna().unique().tolist()) if "Platform" in df.columns else ["All"]
         selected_platform = st.sidebar.selectbox("Platform Source", platforms, key="plat_sel")
 
-        locations = ["All", "Bangalore", "Hyderabad", "Pune", "Noida", "Remote", "Hybrid", "WFH"]
+        locations = ["All", "Bangalore", "Hyderabad", "Pune", "Noida", "Mumbai", "Chennai", "Delhi NCR", "India", "Remote", "Hybrid", "WFH"]
         selected_location = st.sidebar.selectbox("Work Mode / Location", locations, key="loc_sel")
 
         st.sidebar.divider()
@@ -257,8 +245,6 @@ if os.path.exists("jobs.csv"):
                 f"🎯 **Found {len(filtered_df)} PMO Jobs For You!** | Average Match: **{avg_score}%** | "
                 f"Top Match: **{filtered_df.iloc[0]['Title']} ({filtered_df.iloc[0]['Match_Score']}% Match)**"
             )
-        elif resume_text.strip() and filtered_df.empty:
-            st.info("No jobs match your current filters — widen your search to see resume match scores.")
 
         # --- SAVED JOBS COUNTER ---
         saved_count = int((df["Saved"] == True).sum())
