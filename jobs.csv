@@ -1,20 +1,20 @@
-Title,Company,Location,Platform,Track,Link
-Assistant Presales Manager,Capgemini,"Mumbai, India",Naukri,Presales,https://www.naukri.com/presales-manager-jobs
-Senior Bid Manager,Wipro,"Hyderabad, India",LinkedIn,Presales,https://www.linkedin.com/jobs/search/?keywords=Bid%20Manager&location=India
-Presales Director - Cloud Solutions,HCLTech,"Noida, India",IIMJobs,Presales,https://www.iimjobs.com/search/presales-1.html
-Lead Bid Specialist,TCS,"Chennai, India",Instahyre,Presales,https://www.instahyre.com/search/?q=Presales
-Associate Presales Manager,Tech Mahindra,"Pune, India",Foundit,Presales,https://www.foundit.in/s/presales-jobs
-Principal Solution Architect & Presales,Infosys,"Bengaluru, India",LinkedIn,Presales,https://www.linkedin.com/jobs/search/?keywords=Solution%20Architect%20Presales&location=India
-Senior Proposals & Bid Executive,Cognizant,"Kolkata, India",Naukri,Presales,https://www.naukri.com/bid-management-jobs
-Presales Consultant - Enterprise,LTIMindtree,"Mumbai, India",IIMJobs,Presales,https://www.iimjobs.com/search/pmo-presales-1.html
-PMO Lead - Global Delivery,Accenture,"Bengaluru, India",LinkedIn,Project Management,https://www.linkedin.com/jobs/search/?keywords=PMO%20Lead&location=India
-Associate Project Manager (APM),Tech Mahindra,"Noida, India",Naukri,Project Management,https://www.naukri.com/project-manager-pmo-apm-jobs-in-india
-Senior Project Manager - Agile,Deloitte,"Hyderabad, India",IIMJobs,Project Management,https://www.iimjobs.com/search/project-manager-apm-pmo-1.html
-PMO Operations Analyst,EY,"Gurugram, India",Instahyre,Project Management,https://www.instahyre.com/search/?q=Project+Manager
-Project Management Consultant,PwC,"Mumbai, India",Foundit,Project Management,https://www.foundit.in/s/project-manager-apm-jobs
-Senior Delivery Manager,IBM,"Bengaluru, India",LinkedIn,Project Management,https://www.linkedin.com/jobs/search/?keywords=Delivery%20Manager&location=India
-Agile Scrum Master & PMO,Mindtree,"Pune, India",Naukri,Project Management,https://www.naukri.com/scrum-master-jobs
-Program Director - PMO,Genpact,"Noida, India",IIMJobs,Project Management,https://www.iimjobs.com/search/program-manager-1.html
-PMO Governance Specialist,KPMG,"Bengaluru, India",Instahyre,Project Management,https://www.instahyre.com/search/?q=PMO
-Operations Project Lead,Amazon,"Hyderabad, India",Foundit,Operations,https://www.foundit.in/s/operations-manager-jobs
-Transformation Manager,Flipkart,"Bengaluru, India",LinkedIn,Operations,https://www.linkedin.com/jobs/search/?keywords=Transformation%20Manager&location=India
+title,company,location,source,track,posted_date,apply_link,description
+"Senior PMO Manager","Accenture","Bengaluru, India","LinkedIn","PMO","2 hours ago","https://www.linkedin.com","Lead enterprise PMO transformations, resource forecasting, and Agile governance across multi-million dollar portfolios."
+"Presales Solutions Architect","Deloitte","Mumbai, India","Naukri","Presales","4 hours ago","https://www.naukri.com","Drive RFP responses, solution design, and client presentations for complex digital transformation deals."
+"Associate Project Manager","Cognizant","Hyderabad, India","IIMJobs","Project Management","1 day ago","https://www.iimjobs.com","Coordinate cross-functional project deliverables, track sprint milestones, and manage stakeholder communication."
+"PMO Lead - Digital Transformation","Capgemini","Pune, India","Instahyre","PMO","3 hours ago","https://www.instahyre.com","Establish PMO frameworks, risk management registers, and executive dashboards for global banking clients."
+"Bid & Proposal Manager","TCS","Chennai, India","Foundit","Presales","2 days ago","https://www.foundit.in","Manage end-to-end bid lifecycle management, pricing strategies, and technical proposal writing."
+"Senior Agile Project Coordinator","Wipro","Bengaluru, India","LinkedIn","Project Management","5 hours ago","https://www.linkedin.com","Facilitate Scrum ceremonies, track project velocity, and maintain JIRA backlogs for enterprise engineering squads."
+"Presales Director - Cloud Solutions","HCLTech","Noida, India","IIMJobs","Presales","1 day ago","https://www.iimjobs.com","Lead presales engagements for cloud migration deals, defining architecture scopes and commercial terms."
+"PMO Governance Analyst","Infosys","Mysuru, India","Naukri","PMO","6 hours ago","https://www.naukri.com","Monitor project compliance, financial metrics, budget allocations, and resource utilization reports."
+"Technical Program Manager","Tech Mahindra","Pune, India","Instahyre","Project Management","12 hours ago","https://www.instahyre.com","Drive multi-geography software delivery programs, aligning engineering output with strategic business goals."
+"Senior Bid Specialist","L&T Infotech","Mumbai, India","Foundit","Presales","1 day ago","https://www.foundit.in","Craft winning proposals, manage solution estimations, and coordinate with delivery heads for RFPs."
+"PMO Operations Lead","IBM","Bengaluru, India","LinkedIn","PMO","Just now","https://www.linkedin.com","Oversee PMO operations, process optimization, and portfolio risk analysis for major cloud accounts."
+"Associate Presales Consultant","Genpact","Gurugram, India","Naukri","Presales","2 days ago","https://www.naukri.com","Support sales cycles through product demos, technical scoping documents, and RFP questionnaire responses."
+"Project Management Officer","EY","Kolkata, India","IIMJobs","PMO","3 days ago","https://www.iimjobs.com","Manage project governance frameworks, reporting structures, and steering committee decks."
+"Agile Delivery Manager","Publicis Sapient","Gurugram, India","Instahyre","Project Management","4 hours ago","https://www.instahyre.com","Lead high-performing Agile delivery teams, removing blockers and driving value delivery."
+"Principal Presales Manager","Mindtree","Bengaluru, India","Foundit","Presales","1 day ago","https://www.foundit.in","Spearhead complex IT services pursuits, client workshops, and enterprise architecture pitches."
+"PMO Strategy Specialist","KPMG","Mumbai, India","LinkedIn","PMO","2 days ago","https://www.linkedin.com","Design strategic PMO transformation roadmaps and organizational change management frameworks."
+"IT Project Coordinator","HCLTech","Chennai, India","Naukri","Project Management","Just now","https://www.naukri.com","Maintain project documentation, track meeting minutes, and monitor task dependencies."
+"Senior Proposal Writer","Wipro","Hyderabad, India","IIMJobs","Presales","1 day ago","https://www.iimjobs.com","Draft compelling technical and commercial proposals for global telecommunications bids."
+"Enterprise PMO Director","Deloitte","Delhi NCR, India","Instahyre","PMO","3 days ago","https://www.instahyre.com","Direct the enterprise program management office, setting governance standards across practices."
